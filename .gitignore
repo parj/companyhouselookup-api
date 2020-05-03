@@ -32,3 +32,6 @@ build/
 
 ### Shade ###
 dependency-reduced-pom.xml
+
+### K8S ###
+secret.y*ml

@@ -37,3 +37,9 @@ spec:
           limits:
             cpu: 1
             memory: "1G"
+        env:
+          - name: API_COMPANYHOUSE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: lookup-secret
+                key: companyhouselookupapi
