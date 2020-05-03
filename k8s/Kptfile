@@ -27,7 +27,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: livenessProbePath
-          value: /lookup/health
+          value: /lookup/health/liveness
     io.k8s.cli.setters.name:
       x-k8s-cli:
         setter:

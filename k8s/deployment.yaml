@@ -29,7 +29,7 @@ spec:
           successThreshold: 1
         livenessProbe:
           httpGet:
-            path: "/lookup/health" # {"$ref":"#/definitions/io.k8s.cli.setters.livenessProbePath"}
+            path: "/lookup/health/liveness" # {"$ref":"#/definitions/io.k8s.cli.setters.livenessProbePath"}
             port: "container-port"
           initialDelaySeconds: 8
           periodSeconds: 10
@@ -38,8 +38,8 @@ spec:
             cpu: 1
             memory: "1G"
         env:
-          - name: API_COMPANYHOUSE_KEY
-            valueFrom:
-              secretKeyRef:
-                name: lookup-secret
-                key: companyhouselookupapi
+        - name: API_COMPANYHOUSE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: lookup-secret
+              key: companyhouselookupapi
