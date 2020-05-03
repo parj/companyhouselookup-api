@@ -32,7 +32,7 @@ spec:
             path: "/lookup/health/liveness" # {"$ref":"#/definitions/io.k8s.cli.setters.livenessProbePath"}
             port: "container-port"
           initialDelaySeconds: 8
-          periodSeconds: 10
+          periodSeconds: 600
         resources:
           limits:
             cpu: 1
