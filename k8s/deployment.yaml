@@ -8,6 +8,11 @@ spec:
     matchLabels:
       app: companyhouselookup # {"$ref":"#/definitions/io.k8s.cli.setters.name"}
   replicas: 2 # {"$ref":"#/definitions/io.k8s.cli.setters.replicas"}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -33,6 +38,8 @@ spec:
             port: "container-port"
           initialDelaySeconds: 8
           periodSeconds: 600
+          failureThreshold: 1
+          successThreshold: 1
         resources:
           limits:
             cpu: 1
