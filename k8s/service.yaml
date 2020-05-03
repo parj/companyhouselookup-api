@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: companyhouselookup-service # {"$ref":"#/definitions/io.k8s.cli.substitutions.service-name-value"}
+  namespace: external # {"$ref":"#/definitions/io.k8s.cli.setters.namespace"}
+spec:
+  selector:
+    app: companyhouselookup # {"$ref":"#/definitions/io.k8s.cli.setters.name"}
+  ports:
+  - port: 8888 # {"$ref":"#/definitions/io.k8s.cli.setters.port"}
+    targetPort: 8888 # {"$ref":"#/definitions/io.k8s.cli.setters.port"}
+    protocol: TCP
+  type: ClusterIP

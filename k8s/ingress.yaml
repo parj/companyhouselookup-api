@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: companyhouselookup-ingress # {"$ref":"#/definitions/io.k8s.cli.substitutions.ingress-name-value"}
+  namespace: external # {"$ref":"#/definitions/io.k8s.cli.setters.namespace"}
+spec:
+  rules:
+  - host: "mysterious-grass-savages.github" # {"$ref":"#/definitions/io.k8s.cli.setters.host"}
+    http:
+      paths:
+      - path: "/lookup" # {"$ref":"#/definitions/io.k8s.cli.setters.path"}
+        backend:
+          serviceName: companyhouselookup-service # {"$ref":"#/definitions/io.k8s.cli.substitutions.service-name-value"}
+          servicePort: 8888 # {"$ref":"#/definitions/io.k8s.cli.setters.port"}

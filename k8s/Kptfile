@@ -1,0 +1,92 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: kpt-service-ingress-deployment
+upstream:
+  type: git
+  git:
+    commit: 5a8f08ffc21249ef7b8636598ce071fd64f68a2c
+    repo: https://github.com/parj/kpt-service-ingress-deployment
+    directory: /
+    ref: v0.3
+packageMetadata:
+  shortDescription: Simple springboot app package
+openAPI:
+  definitions:
+    io.k8s.cli.setters.host:
+      x-k8s-cli:
+        setter:
+          name: host
+          value: mysterious-grass-savages.github
+    io.k8s.cli.setters.image:
+      x-k8s-cli:
+        setter:
+          name: image
+          value: parjanya/companyhouselookup-api
+    io.k8s.cli.setters.livenessProbePath:
+      x-k8s-cli:
+        setter:
+          name: livenessProbePath
+          value: /lookup/health
+    io.k8s.cli.setters.name:
+      x-k8s-cli:
+        setter:
+          name: name
+          value: companyhouselookup
+    io.k8s.cli.setters.namespace:
+      x-k8s-cli:
+        setter:
+          name: namespace
+          value: external
+    io.k8s.cli.setters.path:
+      x-k8s-cli:
+        setter:
+          name: path
+          value: /lookup
+    io.k8s.cli.setters.port:
+      x-k8s-cli:
+        setter:
+          name: port
+          value: "8888"
+    io.k8s.cli.setters.readinessProbePath:
+      x-k8s-cli:
+        setter:
+          name: readinessProbePath
+          value: /lookup/health
+    io.k8s.cli.setters.replicas:
+      x-k8s-cli:
+        setter:
+          name: replicas
+          value: "2"
+    io.k8s.cli.substitutions.appcontainer-name-value:
+      x-k8s-cli:
+        substitution:
+          name: container-name-value
+          pattern: NAME_SETTER-container
+          values:
+          - marker: NAME_SETTER
+            ref: '#/definitions/io.k8s.cli.setters.name'
+    io.k8s.cli.substitutions.appdeployment-name-value:
+      x-k8s-cli:
+        substitution:
+          name: deployment-name-value
+          pattern: NAME_SETTER-deployment
+          values:
+          - marker: NAME_SETTER
+            ref: '#/definitions/io.k8s.cli.setters.name'
+    io.k8s.cli.substitutions.ingress-name-value:
+      x-k8s-cli:
+        substitution:
+          name: ingress-name-value
+          pattern: NAME_SETTER-ingress
+          values:
+          - marker: NAME_SETTER
+            ref: '#/definitions/io.k8s.cli.setters.name'
+    io.k8s.cli.substitutions.service-name-value:
+      x-k8s-cli:
+        substitution:
+          name: service-name-value
+          pattern: NAME_SETTER-service
+          values:
+          - marker: NAME_SETTER
+            ref: '#/definitions/io.k8s.cli.setters.name'

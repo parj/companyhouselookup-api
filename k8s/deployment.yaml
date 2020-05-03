@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: companyhouselookup-deployment # {"$ref":"#/definitions/io.k8s.cli.substitutions.appdeployment-name-value"}
+  namespace: external # {"$ref":"#/definitions/io.k8s.cli.setters.namespace"}
+spec:
+  selector:
+    matchLabels:
+      app: companyhouselookup # {"$ref":"#/definitions/io.k8s.cli.setters.name"}
+  replicas: 2 # {"$ref":"#/definitions/io.k8s.cli.setters.replicas"}
+  template:
+    metadata:
+      labels:
+        app: companyhouselookup # {"$ref":"#/definitions/io.k8s.cli.setters.name"}
+    spec:
+      containers:
+      - name: companyhouselookup-container # {"$ref":"#/definitions/io.k8s.cli.substitutions.appcontainer-name-value"}
+        image: parjanya/companyhouselookup-api # {"$ref":"#/definitions/io.k8s.cli.setters.image"}
+        ports:
+        - containerPort: 8888 # {"$ref":"#/definitions/io.k8s.cli.setters.port"}
+          name: "container-port"
+        readinessProbe:
+          httpGet:
+            path: "/lookup/health" # {"$ref":"#/definitions/io.k8s.cli.setters.readinessProbePath"}
+            port: "container-port"
+          initialDelaySeconds: 8
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: "/lookup/health" # {"$ref":"#/definitions/io.k8s.cli.setters.livenessProbePath"}
+            port: "container-port"
+          initialDelaySeconds: 8
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 1
+            memory: "1G"
