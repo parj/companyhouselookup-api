@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Shade ###
+dependency-reduced-pom.xml
