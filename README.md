@@ -1,0 +1,1 @@
+![CircleCI](https://img.shields.io/circleci/build/github/parj/companyhouselookup-api) [![Known Vulnerabilities](https://snyk.io/test/github/parj/companyhouselookup-api/badge.svg)](https://snyk.io/test/github/parj/companyhouselookup-api) [![DepShield Badge](https://depshield.sonatype.org/badges/parj/companyhouselookup-api/depshield.svg)](https://depshield.github.io) 
