@@ -113,7 +113,7 @@
                             <alias>sample</alias>
                             <name>parjanya/${project.name}</name>
                             <build>
-                                <from>gcr.io/distroless/java:11-debug</from>
+                                <from>gcr.io/distroless/java:11</from>
                                 <maintainer>brown.dork@gmail.com</maintainer>
                                 <tags>
                                     <tag>latest</tag>
