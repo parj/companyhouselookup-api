@@ -1,14 +1,25 @@
+# Java Gradle CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-java/ for more details
+#
 version: 2
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:11-jdk
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
 
-    working_directory: ~/repo-11
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
+
+    working_directory: ~/repo
 
     environment:
       # Customize the JVM maximum heap limit
-      MAVEN_OPTS: -Xmx3200m
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
 
     steps:
       - checkout
@@ -16,52 +27,16 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "pom.xml" }}
+            - v1-dependencies-{{ checksum "build.gradle" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: mvn dependency:go-offline
+      - run: gradle dependencies
 
       - save_cache:
           paths:
-            - ~/.m2
-          key: v1-dependencies-{{ checksum "pom.xml" }}
+            - ~/.gradle
+          key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      - run:
-          name: Init submodule
-          command: git submodule update --init --recursive
-
-      - run:
-          name: Add GPG key
-          command: .ci/build.sh --import-key
-
-      - setup_remote_docker:
-          docker_layer_caching: false
-
-      - run:
-          name: Package, run tests, sign, upload snapshot to ossrh and upload dockerimage to Dockerhub
-          command: .ci/build.sh
-
-      - run:
-          name: Save test results
-          command: |
-            mkdir -p ~/test-results/junit/
-            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
-          when: always
-
-      - store_test_results:
-          path: ~/test-results
-      - store_artifacts:
-          path: ~/test-results/junit
-
-      - run:
-          name: Push docker image
-          command: |
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-            mvn docker:push
-
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - build
+      # run tests!
+      - run: gradle test
