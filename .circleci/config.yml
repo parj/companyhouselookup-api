@@ -54,11 +54,10 @@ jobs:
       - store_artifacts:
           path: ~/test-results/junit
 
-      - run:
-          name: Push docker image
-          command: |
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-            mvn docker:push
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
 
 workflows:
   version: 2

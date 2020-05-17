@@ -100,43 +100,24 @@
                 <version>2.22.2</version>
             </plugin>
             <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.33.0</version>
-                <extensions>true</extensions>
-
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>2.2.0</version>
                 <configuration>
-                    <verbose>true</verbose>
-
-                    <images>
-                        <image>
-                            <alias>sample</alias>
-                            <name>parjanya/${project.name}</name>
-                            <build>
-                                <from>gcr.io/distroless/java:11</from>
-                                <maintainer>brown.dork@gmail.com</maintainer>
-                                <tags>
-                                    <tag>latest</tag>
-                                    <tag>${project.version}</tag>
-                                </tags>
-                                <assembly>
-                                    <!-- This is a predefined assembly.xml that will only copy your final artifact to the Docker image -->
-                                    <descriptorRef>artifact-with-dependencies</descriptorRef>
-                                </assembly>
-                                <ports>
-                                    <port>8888</port>
-                                </ports>
-                                <entryPoint>
-                                    <exec>
-                                        <arg>java</arg>
-                                        <arg>-jar</arg>
-                                        <!-- /maven/ is the default dir that the plugin copies your artifact to -->
-                                        <arg>/maven/${project.artifactId}-${project.version}.${project.packaging}</arg>
-                                    </exec>
-                                </entryPoint>
-                            </build>
-                        </image>
-                    </images>
+                    <from>
+                        <image>gcr.io/distroless/java:11</image>
+                    </from>
+                    <to>
+                        <image>docker.io/parjanya/${project.name}:${project.version}</image>
+                    </to>
+                    <container>
+                        <args>
+                            <arg>-Djava.security.egd=file:/dev/./urandom</arg>
+                        </args>
+                        <ports>
+                            <port>9999</port>
+                        </ports>
+                    </container>
                 </configuration>
             </plugin>
             <plugin>
